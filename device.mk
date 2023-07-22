@@ -1,0 +1,80 @@
+#
+# Copyright (C) 2023 The Android Open Source Project
+# Copyright (C) 2023 SebaUbuntu's TWRP device tree generator
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+LOCAL_PATH := device/infinix/X665E
+
+# API
+PRODUCT_SHIPPING_API_LEVEL := 30
+
+# Dynamic
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
+
+# A/B
+ENABLE_VIRTUAL_AB := true
+
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
+
+# A/B
+AB_OTA_UPDATER := true
+
+AB_OTA_PARTITIONS += \
+    boot \
+    dtbo \
+    lk \
+    preloader \
+    odm \
+    product \
+    system \
+    system_ext \
+    vbmeta_system \
+    vbemeta_vendor \
+    vendor \
+    vendor_boot
+
+PRODUCT_PACKAGES += \
+    otapreopt_script \
+    update_engine \
+    update_engine_sideload \
+    update_verifier
+
+AB_OTA_POSTINSTALL_CONFIG += \
+    RUN_POSTINSTALL_system=true \
+    POSTINSTALL_PATH_system=system/bin/otapreopt_script \
+    FILESYSTEM_TYPE_system=ext4 \
+    POSTINSTALL_OPTIONAL_system=true
+
+# Boot control HAL
+PRODUCT_PACKAGES += \
+    android.hardware.boot@1.1-impl.recovery \
+    android.hardware.boot@1.1-impl
+
+# fastbootd
+PRODUCT_PACKAGES += \
+    android.hardware.fastboot@1.0-impl-mock
+
+# Heath hal
+PRODUCT_PACKAGES += \
+    android.hardware.health@2.1-service \
+    android.hardware.health@2.1-impl
+ 
+# TWRP specific build flags
+TW_THEME := portrait_hdpi
+BOARD_CHARGER_DISABLE_INIT_BLANK := true
+TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.usb0/lun.%d/file
+TW_INCLUDE_RESETPROP := true
+TW_INCLUDE_REPACKTOOLS := true
+TWRP_INCLUDE_LOGCAT := true
+TARGET_USES_LOGD := true
+TW_EXCLUDE_DEFAULT_USB_INIT := true
+TW_EXTRA_LANGUAGES := true
+TW_INCLUDE_NTFS_3G := true
+TW_MAX_BRIGHTNESS := 2047
+TW_DEFAULT_BRIGHTNESS := 1200
+TARGET_USES_MKE2FS := true
+TW_DEVICE_VERSION := Infinix Hot 20 i by TPP
+TW_NO_SCREEN_BLANK := true
