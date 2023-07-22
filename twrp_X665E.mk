@@ -16,7 +16,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Device specific configs
-$(call inherit-product, device/Infinix/X665E/device.mk)
+$(call inherit-product, device/infinix/X665E/device.mk)
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := X665E
